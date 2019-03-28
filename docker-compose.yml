@@ -1,6 +1,7 @@
 version: "3"
 
 services:
+
   # Nginx
   nginx:
     image: nginx:${NGINX_VERSION}
@@ -18,6 +19,7 @@ services:
       - php-fpm:php-fpm
     networks:
       - default  
+
   # PHP-FPM    
   php-fpm:
     image: php:${PHP_VERSION}
@@ -31,11 +33,11 @@ services:
     restart: always  
     networks:
       - default
+
   # MySQL
   mysql:
     image: mysql:${MYSQL_VERSION}
     container_name: docker-mysql
-    command: "--innodb_use_native_aio=0"
     ports:
       - "${MYSQL_HOST_PORT}"
     volumes:
@@ -50,6 +52,22 @@ services:
     restart: always
     networks: 
       - default  
+
+  # Redis
+  redis:
+    image: redis:${REDIS_VERSION}
+    container_name: docker-redis
+    ports:
+      - "${REDIS_HOST_PORT}"
+    volumes:
+      - ${REDIS_DATA_DIR}:/data:rw
+      - ${REDIS_CONF_FILE}:/etc/redis.conf:ro
+    environment:
+      - REDIS_PASSWORD=${REDIS_PASSWORD}  
+    entrypoint: ["redis-server", "/etc/redis.conf"]
+    networks: 
+      - default  
+
 # Networks      
 networks:
   default:
