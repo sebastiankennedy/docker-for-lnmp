@@ -31,6 +31,25 @@ services:
     restart: always  
     networks:
       - default
+  # MySQL
+  mysql:
+    image: mysql:${MYSQL_VERSION}
+    container_name: docker-mysql
+    command: "--innodb_use_native_aio=0"
+    ports:
+      - "${MYSQL_HOST_PORT}"
+    volumes:
+      - ${MYSQL_DATA_DIR}:/var/lib/mysql:rw      
+      - ${MYSQL_CONF_FILE}:/etc/mysql/conf.d/mysql.cnf:ro  
+      - ${MYSQL_SLOW_LOG}:/var/lib/mysql/mysql.slow.log:rw
+      - ${MYSQL_ERROR_LOG}:/var/lib/mysql/mysql.error.log:rw
+    environment:
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+    restart: always
+    networks: 
+      - default  
 # Networks      
 networks:
   default:
