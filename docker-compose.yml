@@ -43,8 +43,6 @@ services:
     volumes:
       - ${MYSQL_DATA_DIR}:/var/lib/mysql:rw      
       - ${MYSQL_CONF_FILE}:/etc/mysql/conf.d/mysql.cnf:ro  
-      - ${MYSQL_SLOW_LOG}:/var/lib/mysql/mysql.slow.log:rw
-      - ${MYSQL_ERROR_LOG}:/var/lib/mysql/mysql.error.log:rw
     environment:
       - MYSQL_USER=${MYSQL_USER}
       - MYSQL_PASSWORD=${MYSQL_PASSWORD}
