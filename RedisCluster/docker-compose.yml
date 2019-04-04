@@ -5,16 +5,109 @@ services:
     image: redis:5-alpine
     container_name: redis-cluster-1
     ports:
-      - 6379:6379
+      - 6401:6401
     volumes:
       - ./database/redis-cluster-1:/data
-      - ./conf/redis-cluster-1/redis.conf:/usr/local/etc/redis/redis.conf:rw
+      - ./conf/redis-cluster-1/redis.conf:/etc/redis.conf:ro
     working_dir: /data
     environment:
       - REDIS_PASSWORD=123456
-    entrypoint: ["redis-server", "/usr/local/etc/redis/redis.conf"]
+    entrypoint: ["redis-server", "/etc/redis.conf"]
     restart: always
     networks: 
-      - default      
+      - default
+  redis-cluster-2:
+    image: redis:5-alpine
+    container_name: redis-cluster-2
+    ports:
+      - 6402:6402
+    volumes:
+      - ./database/redis-cluster-2:/data
+      - ./conf/redis-cluster-2/redis.conf:/etc/redis.conf:ro
+    working_dir: /data
+    environment:
+      - REDIS_PASSWORD=123456
+    entrypoint: ["redis-server", "/etc/redis.conf"]
+    restart: always
+    networks: 
+      - default
+                 
+  redis-cluster-3:
+    image: redis:5-alpine
+    container_name: redis-cluster-3
+    ports:
+      - 6403:6403
+    volumes:
+      - ./database/redis-cluster-3:/data
+      - ./conf/redis-cluster-3/redis.conf:/etc/redis.conf:ro
+    working_dir: /data
+    environment:
+      - REDIS_PASSWORD=123456
+    entrypoint: ["redis-server", "/etc/redis.conf"]
+    restart: always
+    networks: 
+      - default
+
+  redis-cluster-3:
+    image: redis:5-alpine
+    container_name: redis-cluster-3
+    ports:
+      - 6403:6403
+    volumes:
+      - ./database/redis-cluster-3:/data
+      - ./conf/redis-cluster-3/redis.conf:/etc/redis.conf:ro
+    working_dir: /data
+    environment:
+      - REDIS_PASSWORD=123456
+    entrypoint: ["redis-server", "/etc/redis.conf"]
+    restart: always
+    networks: 
+      - default
+
+  redis-cluster-4:
+    image: redis:5-alpine
+    container_name: redis-cluster-4
+    ports:
+      - 6404:6404
+    volumes:
+      - ./database/redis-cluster-4:/data
+      - ./conf/redis-cluster-4/redis.conf:/etc/redis.conf:ro
+    working_dir: /data
+    environment:
+      - REDIS_PASSWORD=123456
+    entrypoint: ["redis-server", "/etc/redis.conf"]
+    restart: always
+    networks: 
+      - default
+  redis-cluster-5:
+    image: redis:5-alpine
+    container_name: redis-cluster-5
+    ports:
+      - 6405:6405
+    volumes:
+      - ./database/redis-cluster-5:/data
+      - ./conf/redis-cluster-5/redis.conf:/etc/redis.conf:ro
+    working_dir: /data
+    environment:
+      - REDIS_PASSWORD=123456
+    entrypoint: ["redis-server", "/etc/redis.conf"]
+    restart: always
+    networks: 
+      - default            
+  redis-cluster-6:
+    image: redis:5-alpine
+    container_name: redis-cluster-6
+    ports:
+      - 6406:6406
+    volumes:
+      - ./database/redis-cluster-6:/data
+      - ./conf/redis-cluster-6/redis.conf:/etc/redis.conf:ro
+    working_dir: /data
+    environment:
+      - REDIS_PASSWORD=123456
+    entrypoint: ["redis-server", "/etc/redis.conf"]
+    restart: always
+    networks: 
+      - default               
 networks:
   default:
