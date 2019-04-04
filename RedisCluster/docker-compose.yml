@@ -1,0 +1,20 @@
+version: "3"
+
+services:
+  redis-cluster-1:
+    image: redis:5-alpine
+    container_name: redis-cluster-1
+    ports:
+      - 6379:6379
+    volumes:
+      - ./database/redis-cluster-1:/data
+      - ./conf/redis-cluster-1/redis.conf:/usr/local/etc/redis/redis.conf:rw
+    working_dir: /data
+    environment:
+      - REDIS_PASSWORD=123456
+    entrypoint: ["redis-server", "/usr/local/etc/redis/redis.conf"]
+    restart: always
+    networks: 
+      - default      
+networks:
+  default:
