@@ -1,6 +1,7 @@
 version: "3"
 
 services:
+
   # 主节点一号
   redis-cluster-1:
     image: redis:5-alpine
@@ -11,8 +12,6 @@ services:
       - ./database/redis-cluster-1:/data
       - ./conf/redis-cluster-1/redis.conf:/etc/redis.conf:ro
     working_dir: /data
-    environment:
-      - REDIS_PASSWORD=123456
     entrypoint: ["redis-server", "/etc/redis.conf"]
     restart: always
     networks: 
@@ -28,8 +27,6 @@ services:
       - ./database/redis-cluster-2:/data
       - ./conf/redis-cluster-2/redis.conf:/etc/redis.conf:ro
     working_dir: /data
-    environment:
-      - REDIS_PASSWORD=123456
     entrypoint: ["redis-server", "/etc/redis.conf"]
     restart: always
     networks: 
@@ -45,8 +42,6 @@ services:
       - ./database/redis-cluster-3:/data
       - ./conf/redis-cluster-3/redis.conf:/etc/redis.conf:ro
     working_dir: /data
-    environment:
-      - REDIS_PASSWORD=123456
     entrypoint: ["redis-server", "/etc/redis.conf"]
     restart: always
     networks: 
@@ -62,9 +57,7 @@ services:
       - ./database/redis-cluster-4:/data
       - ./conf/redis-cluster-4/redis.conf:/etc/redis.conf:ro
     working_dir: /data
-    environment:
-      - REDIS_PASSWORD=123456
-    entrypoint: ["redis-server", "/etc/redis.conf"]
+    entrypoint: ["redis-server", "/etc/redis.conf",'--slaveof', 'redis-cluster-master-1', '6379']
     restart: always
     depends_on:
       - redis-cluster-1
@@ -81,14 +74,13 @@ services:
       - ./database/redis-cluster-5:/data
       - ./conf/redis-cluster-5/redis.conf:/etc/redis.conf:ro
     working_dir: /data
-    environment:
-      - REDIS_PASSWORD=123456
-    entrypoint: ["redis-server", "/etc/redis.conf"]
+    entrypoint: ["redis-server", "/etc/redis.conf",'--slaveof', 'redis-cluster-master-2', '6379']
     restart: always
     depends_on:
       - redis-cluster-2
     networks: 
-      - sentinel-master-slave         
+      - sentinel-master-slave      
+
   # 从节点三号
   redis-cluster-6:
     image: redis:5-alpine
@@ -99,13 +91,13 @@ services:
       - ./database/redis-cluster-6:/data
       - ./conf/redis-cluster-6/redis.conf:/etc/redis.conf:ro
     working_dir: /data
-    environment:
-      - REDIS_PASSWORD=123456
-    entrypoint: ["redis-server", "/etc/redis.conf"]
+    entrypoint: ["redis-server", "/etc/redis.conf",'--slaveof', 'redis-cluster-master-3', '6379']
     restart: always
     depends_on:
       - redis-cluster-3
     networks: 
-      - sentinel-master-slave               
+      - sentinel-master-slave    
+
+# 网络配置
 networks:
   sentinel-master-slave:
