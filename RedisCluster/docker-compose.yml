@@ -1,6 +1,7 @@
 version: "3"
 
 services:
+  # 主节点一号
   redis-cluster-1:
     image: redis:5-alpine
     container_name: redis-cluster-master-1
@@ -15,7 +16,9 @@ services:
     entrypoint: ["redis-server", "/etc/redis.conf"]
     restart: always
     networks: 
-      - default
+      - sentinel-master-slave
+
+  # 主节点二号
   redis-cluster-2:
     image: redis:5-alpine
     container_name: redis-cluster-master-2
@@ -30,9 +33,9 @@ services:
     entrypoint: ["redis-server", "/etc/redis.conf"]
     restart: always
     networks: 
-      - default
+      - sentinel-master-slave
                  
-
+  # 主节点三号
   redis-cluster-3:
     image: redis:5-alpine
     container_name: redis-cluster-master-3
@@ -47,8 +50,9 @@ services:
     entrypoint: ["redis-server", "/etc/redis.conf"]
     restart: always
     networks: 
-      - default
+      - sentinel-master-slave
 
+  # 从节点一号
   redis-cluster-4:
     image: redis:5-alpine
     container_name: redis-cluster-slave-1
@@ -65,8 +69,9 @@ services:
     depends_on:
       - redis-cluster-1
     networks: 
-      - default
+      - sentinel-master-slave
 
+  # 从节点二号
   redis-cluster-5:
     image: redis:5-alpine
     container_name: redis-cluster-slave-2
@@ -83,8 +88,8 @@ services:
     depends_on:
       - redis-cluster-2
     networks: 
-      - default         
-
+      - sentinel-master-slave         
+  # 从节点三号
   redis-cluster-6:
     image: redis:5-alpine
     container_name: redis-cluster-slave-3
@@ -101,6 +106,6 @@ services:
     depends_on:
       - redis-cluster-3
     networks: 
-      - default               
+      - sentinel-master-slave               
 networks:
-  default:
+  sentinel-master-slave:
