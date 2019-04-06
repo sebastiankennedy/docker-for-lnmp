@@ -1,4 +1,4 @@
-version: "3"
+version: '3'
 
 services:
 
@@ -12,7 +12,7 @@ services:
       - ./database/redis-cluster-1:/data
       - ./conf/redis-cluster-1/redis.conf:/etc/redis.conf:rw
     working_dir: /data
-    entrypoint: ["redis-server", "/etc/redis.conf"]
+    entrypoint: ['redis-server', '/etc/redis.conf']
     restart: always
     networks: 
       - sentinel-master-slave
@@ -27,7 +27,7 @@ services:
       - ./database/redis-cluster-2:/data
       - ./conf/redis-cluster-2/redis.conf:/etc/redis.conf:rw
     working_dir: /data
-    entrypoint: ["redis-server", "/etc/redis.conf"]
+    entrypoint: ['redis-server', '/etc/redis.conf']
     restart: always
     networks: 
       - sentinel-master-slave
@@ -42,7 +42,7 @@ services:
       - ./database/redis-cluster-3:/data
       - ./conf/redis-cluster-3/redis.conf:/etc/redis.conf:rw
     working_dir: /data
-    entrypoint: ["redis-server", "/etc/redis.conf"]
+    entrypoint: ['redis-server', '/etc/redis.conf']
     restart: always
     networks: 
       - sentinel-master-slave
@@ -57,7 +57,7 @@ services:
       - ./database/redis-cluster-4:/data
       - ./conf/redis-cluster-4/redis.conf:/etc/redis.conf:rw
     working_dir: /data
-    entrypoint: ["redis-server", "/etc/redis.conf",'--slaveof', 'redis-cluster-master-1', '6379']
+    entrypoint: ['redis-server', '/etc/redis.conf','--slaveof', 'redis-cluster-master-1', '6379']
     restart: always
     depends_on:
       - redis-cluster-1
@@ -74,7 +74,7 @@ services:
       - ./database/redis-cluster-5:/data
       - ./conf/redis-cluster-5/redis.conf:/etc/redis.conf:rw
     working_dir: /data
-    entrypoint: ["redis-server", "/etc/redis.conf",'--slaveof', 'redis-cluster-master-1', '6379']
+    entrypoint: ['redis-server', '/etc/redis.conf','--slaveof', 'redis-cluster-master-1', '6379']
     restart: always
     depends_on:
       - redis-cluster-2
@@ -91,7 +91,7 @@ services:
       - ./database/redis-cluster-6:/data
       - ./conf/redis-cluster-6/redis.conf:/etc/redis.conf:rw
     working_dir: /data
-    entrypoint: ["redis-server", "/etc/redis.conf",'--slaveof', 'redis-cluster-master-1', '6379']
+    entrypoint: ['redis-server', '/etc/redis.conf','--slaveof', 'redis-cluster-master-1', '6379']
     restart: always
     depends_on:
       - redis-cluster-3
@@ -106,11 +106,10 @@ services:
       - 26407:26379
     volumes:
       - ./database/redis-cluster-7:/data
+      - ./conf/redis-cluster-7/redis.conf:/etc/redis.conf:rw
       - ./conf/redis-cluster-7/sentinel.conf:/etc/sentinel.conf:rw
     working_dir: /data
     restart: always
-    depends_on:
-      - redis-cluster-1
     links:
       - redis-cluster-1:redis-master
     networks: 
@@ -124,11 +123,10 @@ services:
       - 26408:26379
     volumes:
       - ./database/redis-cluster-8:/data
+      - ./conf/redis-cluster-8/redis.conf:/etc/redis.conf:rw
       - ./conf/redis-cluster-8/sentinel.conf:/etc/sentinel.conf:rw
     working_dir: /data
     restart: always
-    depends_on:
-      - redis-cluster-1
     links:
       - redis-cluster-1:redis-master
     networks: 
@@ -142,11 +140,10 @@ services:
       - 26409:26379
     volumes:
       - ./database/redis-cluster-9:/data
+      - ./conf/redis-cluster-9/redis.conf:/etc/redis.conf:rw
       - ./conf/redis-cluster-9/sentinel.conf:/etc/sentinel.conf:rw
     working_dir: /data
     restart: always
-    depends_on:
-      - redis-cluster-1
     links:
       - redis-cluster-1:redis-master
     networks: 
